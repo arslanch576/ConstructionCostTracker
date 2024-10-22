@@ -1,7 +1,9 @@
 package com.coderobust.constructioncosttracker
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.coderobust.constructioncosttracker.databinding.ItemProjectBinding
 
@@ -20,5 +22,9 @@ class ProjectAdapter(val items:List<Project>):RecyclerView.Adapter<ProjectViewHo
         holder.binding.title.text=project.title
         holder.binding.desc.text=project.desc
         holder.binding.budget.text="Budget: "+project.budget
+
+        holder.itemView.setOnClickListener {
+            holder.itemView.context.startActivity(Intent(holder.itemView.context,ProjectDetailsActivity::class.java).putExtra("id",project.id))
+        }
     }
 }

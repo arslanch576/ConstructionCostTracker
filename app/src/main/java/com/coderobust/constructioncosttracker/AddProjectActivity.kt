@@ -2,10 +2,7 @@ package com.coderobust.constructioncosttracker
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.coderobust.constructioncosttracker.databinding.ActivityAddProjectBinding
 
 class AddProjectActivity : AppCompatActivity() {
@@ -23,7 +20,7 @@ class AddProjectActivity : AppCompatActivity() {
                 title = binding.title.editText?.text.toString(),
                 desc = binding.desc.editText?.text.toString(),
                 startDate = binding.date.editText?.text.toString(),
-                budget = binding.budget.editText?.text.toString().toInt()
+                budget = binding.cost.editText?.text.toString().toInt()
             )
 
             AppDatabase.getDatabase(this).projectDao().insert(project)
