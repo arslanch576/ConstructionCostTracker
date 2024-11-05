@@ -1,9 +1,10 @@
-package com.coderobust.constructioncosttracker
+package com.coderobust.constructioncosttracker.room
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.coderobust.constructioncosttracker.data.Project
 
 @Dao
 interface ProjectDao {

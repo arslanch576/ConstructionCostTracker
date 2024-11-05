@@ -1,4 +1,4 @@
-package com.coderobust.constructioncosttracker
+package com.coderobust.constructioncosttracker.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,9 +1,10 @@
-package com.coderobust.constructioncosttracker
+package com.coderobust.constructioncosttracker.activities
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.coderobust.constructioncosttracker.databinding.ActivityAddProjectBinding
+import com.coderobust.constructioncosttracker.room.AppDatabase
+import com.coderobust.constructioncosttracker.data.ProjectCostItem
 import com.coderobust.constructioncosttracker.databinding.ActivityAddProjectCostBinding
 
 class AddProjectCostActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class AddProjectCostActivity : AppCompatActivity() {
 
         binding.save.setOnClickListener {
 
-            val project=ProjectCostItem(
+            val project= ProjectCostItem(
                 projectId = id,
                 name = binding.title.editText?.text.toString(),
                 date = binding.date.editText?.text.toString(),
