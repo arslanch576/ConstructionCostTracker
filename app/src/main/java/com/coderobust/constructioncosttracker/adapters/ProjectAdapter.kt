@@ -1,18 +1,24 @@
 package com.coderobust.constructioncosttracker.adapters
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.coderobust.constructioncosttracker.activities.AddProjectActivity
 import com.coderobust.constructioncosttracker.activities.ProjectDetailsActivity
 import com.coderobust.constructioncosttracker.data.Project
 import com.coderobust.constructioncosttracker.data.ProjectCostItem
 import com.coderobust.constructioncosttracker.databinding.ItemLabelBinding
 import com.coderobust.constructioncosttracker.databinding.ItemProjectBinding
 import com.coderobust.constructioncosttracker.databinding.ItemProjectCostBinding
+import com.coderobust.constructioncosttracker.room.AppDatabase
 import com.coderobust.constructioncosttracker.viewholders.LabelItemViewHolder
 import com.coderobust.constructioncosttracker.viewholders.ProjectCostViewHolder
 import com.coderobust.constructioncosttracker.viewholders.ProjectViewHolder
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlin.math.truncate
 
 class ProjectAdapter(val items: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -57,6 +63,34 @@ class ProjectAdapter(val items: List<Any>) : RecyclerView.Adapter<RecyclerView.V
                         ProjectDetailsActivity::class.java
                     ).putExtra("id", project.id)
                 )
+            }
+
+            holder.itemView.setOnLongClickListener {
+                val dialogBuilder=MaterialAlertDialogBuilder(holder.itemView.context)
+                dialogBuilder.setItems(arrayOf("Edit","Delete"), DialogInterface.OnClickListener { dialog, which ->
+                    if (which==0){
+                        holder.itemView.context.startActivity(Intent(holder.itemView.context,AddProjectActivity::class.java).putExtra("id",project.id))
+                    }else{
+                        val warningDialog=MaterialAlertDialogBuilder(holder.itemView.context)
+                        warningDialog.setTitle("Sure to delete?")
+                        warningDialog.setMessage("The project will be deleted permanently")
+                        warningDialog.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
+                            AppDatabase.getDatabase(holder.itemView.context).projectDao().delete(project)
+                            Toast.makeText(holder.itemView.context,"Deleted",Toast.LENGTH_SHORT).show()
+                        })
+
+                        warningDialog.setNegativeButton("No", DialogInterface.OnClickListener { dialog, which ->
+                            dialog.dismiss()
+                        })
+
+                        warningDialog.show()
+
+                    }
+                })
+
+                dialogBuilder.show()
+
+                true
             }
         }
         if (holder is ProjectCostViewHolder) {

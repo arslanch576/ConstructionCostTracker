@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey
 class Project(
     @PrimaryKey(autoGenerate = true)
     var id:Int=0,
-    var title:String,
-    var desc:String,
-    var startDate:String,
+    var title:String="",
+    var desc:String="",
+    var startDate:String="",
     var isCompleted:Boolean=false,
-    var budget:Int,
+    var budget:Int=0,
     ) {
 }
